@@ -11,7 +11,12 @@ public class RotationTest : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.rotation =  GyroToUnity(Input.gyro.attitude);
+        Vector3 euler = GyroToUnity(Input.gyro.attitude).eulerAngles;
+        euler.x = 0;
+        euler.y = 0;
+        transform.rotation =  Quaternion.Euler(euler);
+        //transform.position = new Vector3(euler.z, 0, 0) * 10f * Time.deltaTime;
+        //transform.position += euler * 10f * Time.deltaTime;
 	}
 
     private void OnGUI()
