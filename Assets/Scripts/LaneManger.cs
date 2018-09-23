@@ -36,8 +36,13 @@ public class LaneManger : MonoBehaviour {
     [SerializeField]
     private Lane[] m_BottomLanes, m_CenterLanes, m_TopLanes;
 
+    [SerializeField]
+    private ObstacleManager m_Obstacles;
+
     private Lane[,] m_LaneGrid;
     private Vector2i m_CurrentLane;
+
+    private float m_SpawnTimer;
 
     public void Start()
     {
@@ -67,6 +72,21 @@ public class LaneManger : MonoBehaviour {
         m_CurrentLane += dir;
         m_CurrentLane.x = Mathf.Clamp(m_CurrentLane.x, 0, 2);
         m_CurrentLane.y = Mathf.Clamp(m_CurrentLane.y, 0, 2);
+    }
+
+    private void Update()
+    {
+        m_SpawnTimer -= Time.deltaTime;
+        if(m_SpawnTimer < 0)
+        {
+            m_SpawnTimer = 3f;
+
+            int x = Random.Range(0, 3);
+            int y = Random.Range(0, 3);
+            
+            m_Obstacles.SpawnObstacle(m_LaneGrid[x, y].transform.position);
+            
+        }
     }
 
     public Vector3 MoveUp()

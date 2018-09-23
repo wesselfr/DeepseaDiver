@@ -14,12 +14,25 @@ public class GridSelectorPropertyDrawer : PropertyDrawer
 
         EditorGUI.BeginProperty(position, label, property);
 
+        int size = property.arraySize;
+
         bool[,] boolGrid = new bool[grid.widht, grid.height];
-        for(int x = 0; x < grid.widht; x++)
+        //for(int x = 0; x < grid.widht; x++)
+        //{
+
+        //    for(int y = 0; y < grid.height; y++)
+        //    {
+        //        boolGrid[x, y] = EditorGUILayout.Toggle(boolGrid[x,y]);
+        //    }
+            
+        //}
+        
+        for(int i = 0; i < size; i++)
         {
-            for(int y = 0; y < grid.height; y++)
+            if (i % grid.widht == 0)
             {
-                boolGrid[x, y] = EditorGUILayout.Toggle(boolGrid[x,y]);
+                SerializedProperty arrayItem = property.GetArrayElementAtIndex(i);
+                arrayItem.boolValue = EditorGUILayout.Toggle(arrayItem.boolValue);
             }
         }
 
