@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
     public delegate void GameManagerEvent();
     public static GameManagerEvent OnGameReset;
 
-    private int m_GlobalPlays;
+    private int m_GlobalPlays = 0;
     private static bool m_PlayerAlive;
 
 	// Use this for initialization
@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour {
         Player.onPlayerDeath += PlayerDeath;
 
         AnalyticsEvent.debugMode = Application.isEditor;
+
+        if(m_GlobalPlays == 0)
+        {
+            DataPrivacy.Initialize();
+        }
 	}
 	
 	// Update is called once per frame
