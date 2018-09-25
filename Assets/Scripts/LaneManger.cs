@@ -79,7 +79,7 @@ public class LaneManger : MonoBehaviour {
         m_SpawnTimer -= Time.deltaTime;
         if(m_SpawnTimer < 0)
         {
-            m_SpawnTimer = 3f;
+            m_SpawnTimer = 4f;
 
             int x = Random.Range(0, 3);
             int y = Random.Range(0, 3);

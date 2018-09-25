@@ -20,8 +20,13 @@ public class GenericObstacle : ScriptableObject {
     [SerializeField]
     private int m_ObjectPoolAmount;
 
+    [Header("Scripts")]
+    [SerializeField]
+    private DamageBehavior m_Damage;
+
 
     public int objectPoolAmount { get { return m_ObjectPoolAmount; } }
     public GameObject obstacleObject { get { return m_Prefab; } }
+    public DamageBehavior damageBehavior { get { return m_Damage; } }
     
 }

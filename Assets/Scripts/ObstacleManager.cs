@@ -25,15 +25,18 @@ public class ObstacleManager : MonoBehaviour
 
     private Stack<ObstaclePair> m_ObjectsInUse;
 
-    private float m_ResetTime = 6f;
+    private float m_ResetTime = 8f;
 
     [SerializeField]
     private Transform m_ObjectPoolPosition;
+
+    private bool m_Death;
 
     // Use this for initialization
     void Start()
     {
         InitializeObjectPool();
+        Player.onPlayerDeath += OnDeath;
     }
 
     public void InitializeObjectPool()
@@ -54,21 +57,34 @@ public class ObstacleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_ResetTime -= Time.deltaTime;
-        if (m_ObjectsInUse.Count > 0)
+        if (!m_Death)
         {
-            ObstaclePair[] updatePosition = m_ObjectsInUse.ToArray();
-            for (int i = 0; i <  updatePosition.Length; i++)
+            m_ResetTime -= Time.deltaTime;
+            if (m_ObjectsInUse.Count > 0)
             {
-                GameObject obstacle = updatePosition[i].obstacle;
-                updatePosition[i].obstacle.transform.position = obstacle.transform.position + -Vector3.forward * 10f * Time.deltaTime;
-            }
-            if (m_ResetTime < 0)
-            {
-                m_ResetTime = 3f;
-                ToObjectPool(m_ObjectsInUse.Pop());
+                ObstaclePair[] updatePosition = m_ObjectsInUse.ToArray();
+                for (int i = 0; i < updatePosition.Length; i++)
+                {
+                    GameObject obstacle = updatePosition[i].obstacle;
+                    updatePosition[i].obstacle.transform.position = obstacle.transform.position + -Vector3.forward * 10f * Time.deltaTime;
+                }
+                if (m_ResetTime < 0)
+                {
+                    m_ResetTime = 4f;
+                    ToObjectPool(m_ObjectsInUse.Pop());
+                }
             }
         }
+    }
+
+    void OnDeath()
+    {
+        m_Death = true;
+    }
+
+    void OnReset()
+    {
+        m_Death = false;
     }
 
     void ToObjectPool(ObstaclePair pair)
@@ -80,10 +96,13 @@ public class ObstacleManager : MonoBehaviour
 
     public void SpawnObstacle(Vector3 position)
     {
-        ObstaclePair fromPool = m_ObjectPool.Pop();
-        fromPool.obstacle.transform.position = new Vector3(position.x, position.y, 0);
-        fromPool.obstacle.gameObject.SetActive(true);
-        m_ObjectsInUse.Push(fromPool);
+        if (!m_Death)
+        {
+            ObstaclePair fromPool = m_ObjectPool.Pop();
+            fromPool.obstacle.transform.position = new Vector3(position.x, position.y, 20);
+            fromPool.obstacle.gameObject.SetActive(true);
+            m_ObjectsInUse.Push(fromPool);
+        }
     }
 
 }

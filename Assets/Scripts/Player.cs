@@ -26,111 +26,119 @@ public class Player : MonoBehaviour {
     private Vector3 m_TouchStart;
     private Vector3 m_TouchEnd;
 
+    private bool m_Alive;
+
+    public delegate void PlayerEvent();
+    public static PlayerEvent onPlayerDeath;
+
 	// Use this for initialization
 	void Start () {
+        m_Alive = true;
         m_Debug = Application.isEditor;
 
         float ratio = Screen.width / Screen.height;
         m_SideSwapSensivity = m_SwipeSensivity * ratio;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (Input.touchCount > 0)
-        {
 
-            if(Input.GetTouch(0).phase == TouchPhase.Began)
+    // Update is called once per frame
+    void Update()
+    {
+        if (m_Alive)
+        {
+            if (Input.touchCount > 0)
             {
-                m_TouchPosition = Input.GetTouch(0).position;
-            }
-            if (Input.GetTouch(0).phase == TouchPhase.Moved)
-            {
-                Vector2 position = Input.GetTouch(0).position;
-                m_TouchDelta = position - m_TouchPosition;
-            }
-            if(Input.GetTouch(0).phase == TouchPhase.Ended)
-            {
-                //Swipe Left/Right
-                if(Mathf.Abs(m_TouchDelta.x) > Mathf.Abs(m_TouchDelta.y))
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
                 {
-                    //Can Swipe?
-                    if (Mathf.Abs(m_TouchDelta.x) > m_SwipeSensivity)
+                    m_TouchPosition = Input.GetTouch(0).position;
+                }
+                if (Input.GetTouch(0).phase == TouchPhase.Moved)
+                {
+                    Vector2 position = Input.GetTouch(0).position;
+                    m_TouchDelta = position - m_TouchPosition;
+                }
+                if (Input.GetTouch(0).phase == TouchPhase.Ended)
+                {
+                    //Swipe Left/Right
+                    if (Mathf.Abs(m_TouchDelta.x) > Mathf.Abs(m_TouchDelta.y))
                     {
-                        //Move Right
-                        if (Mathf.Sign(m_TouchDelta.x) > 0)
+                        //Can Swipe?
+                        if (Mathf.Abs(m_TouchDelta.x) > m_SwipeSensivity)
                         {
-                            MoveRight();
+                            //Move Right
+                            if (Mathf.Sign(m_TouchDelta.x) > 0)
+                            {
+                                MoveRight();
+                            }
+                            //Move Left
+                            else
+                            {
+                                MoveLeft();
+                            }
                         }
-                        //Move Left
-                        else
+                    }
+                    //Swipe Up/Down
+                    else
+                    {
+                        //Can Swipe?
+                        if (Mathf.Abs(m_TouchDelta.y) > m_SwipeSensivity)
                         {
-                            MoveLeft();
+                            //Move Up
+                            if (Mathf.Sign(m_TouchDelta.y) > 0)
+                            {
+                                MoveUp();
+                            }
+                            //Move Down
+                            else
+                            {
+                                MoveDown();
+                            }
                         }
                     }
                 }
-                //Swipe Up/Down
-                else
+
+
+                //if (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Ended || Input.GetTouch(0).phase == TouchPhase.Canceled)
+                //{
+                //    //if (m_CurrentTransitionTimer <= 0)
+                //    //{
+                //        if (m_TouchDelta.y > m_SwipeSensivity) { MoveUp(); }
+                //        if (m_TouchDelta.y < -m_SwipeSensivity) { MoveDown(); }
+                //        if (m_TouchDelta.x > m_SwipeSensivity) { MoveRight(); }
+                //        if (m_TouchDelta.x < -m_SwipeSensivity) { MoveLeft(); }
+                //    //}
+                //}
+            }
+            if (m_CurrentTransitionTimer <= 0)
+            {
+
+                if (m_Debug)
                 {
-                    //Can Swipe?
-                    if (Mathf.Abs(m_TouchDelta.y) > m_SwipeSensivity)
+                    if (Input.GetKeyDown(KeyCode.W))
                     {
-                        //Move Up
-                        if (Mathf.Sign(m_TouchDelta.y) > 0)
-                        {
-                            MoveUp();
-                        }
-                        //Move Down
-                        else
-                        {
-                            MoveDown();
-                        }
+                        MoveUp();
+                    }
+                    if (Input.GetKeyDown(KeyCode.S))
+                    {
+                        MoveDown();
+                    }
+                    if (Input.GetKeyDown(KeyCode.A))
+                    {
+                        MoveLeft();
+                    }
+                    if (Input.GetKeyDown(KeyCode.D))
+                    {
+                        MoveRight();
                     }
                 }
             }
-
-
-            //if (Input.GetTouch(0).phase == TouchPhase.Stationary || Input.GetTouch(0).phase == TouchPhase.Ended || Input.GetTouch(0).phase == TouchPhase.Canceled)
-            //{
-            //    //if (m_CurrentTransitionTimer <= 0)
-            //    //{
-            //        if (m_TouchDelta.y > m_SwipeSensivity) { MoveUp(); }
-            //        if (m_TouchDelta.y < -m_SwipeSensivity) { MoveDown(); }
-            //        if (m_TouchDelta.x > m_SwipeSensivity) { MoveRight(); }
-            //        if (m_TouchDelta.x < -m_SwipeSensivity) { MoveLeft(); }
-            //    //}
-            //}
-        }
-        if (m_CurrentTransitionTimer <= 0)
-        {
-
-            if (m_Debug)
+            else
             {
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    MoveUp();
-                }
-                if (Input.GetKeyDown(KeyCode.S))
-                {
-                    MoveDown();
-                }
-                if (Input.GetKeyDown(KeyCode.A))
-                {
-                    MoveLeft();
-                }
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    MoveRight();
-                }
+                m_CurrentTransitionTimer -= Time.deltaTime;
+
+                transform.position = Vector3.Slerp(transform.position, m_GoalPosition, m_LerpTime * Time.deltaTime);
             }
         }
-        else
-        {
-            m_CurrentTransitionTimer -= Time.deltaTime;
-
-            transform.position = Vector3.Slerp(transform.position, m_GoalPosition, m_LerpTime*Time.deltaTime);
-        }
-	}
-
+    }
     private void CallculateLerpTime()
     {
         m_LerpTime = Vector3.Distance(transform.position, m_GoalPosition) / m_TransitionTime;
@@ -172,8 +180,23 @@ public class Player : MonoBehaviour {
         CallculateLerpTime();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag.Contains("Obstacle"))
+        {
+            //Kill
+            Debug.Log("KILL");
+            m_Alive = false;
+            if(onPlayerDeath != null)
+            {
+                onPlayerDeath();
+            }
+        }
+    }
+
     private void OnDrawGizmos()
     {
         
     }
+
 }
