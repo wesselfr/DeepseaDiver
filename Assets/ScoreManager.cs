@@ -21,7 +21,7 @@ public class ScoreManager : MonoBehaviour
     {
         m_Playing = true;
         Player.onPlayerDeath += OnDeath;
-        GameManager.OnGameReset += ResetScore;
+        GameManager.OnGameStart += StartPlaying;
     }
 
     public void OnDeath()

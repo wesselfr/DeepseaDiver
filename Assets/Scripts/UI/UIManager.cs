@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Player.onPlayerDeath += PlayerDeath;
+        GameManager.OnGameStart += SwitchToGameView;
 	}
 	
 	// Update is called once per frame
@@ -26,6 +27,13 @@ public class UIManager : MonoBehaviour {
         m_EndRunUI.SetActive(true);
         StartCoroutine(ScaleEffect(m_EndRunUI, 7f));
     }
+
+    void SwitchToGameView()
+    {
+        m_ScoreHolder.SetActive(true);
+        m_EndRunUI.SetActive(false);
+    }
+
 
     IEnumerator ScaleEffect(GameObject panel, float speed)
     {

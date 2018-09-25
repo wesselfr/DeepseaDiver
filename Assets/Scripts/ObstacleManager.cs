@@ -2,30 +2,40 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public struct ObstaclePair
+public class ObstaclePair
 {
     GameObject m_ObstacleObject;
     GenericObstacle m_Data;
+    float m_TimeLeft;
 
     public ObstaclePair(GameObject obstacleObject, GenericObstacle data)
     {
         m_ObstacleObject = obstacleObject;
         m_Data = data;
+        m_TimeLeft = 4f;
+    }
+
+    public void SetLifetime(float time)
+    {
+        m_TimeLeft = time;
+    }
+    public void RemoveTime(float delta)
+    {
+        m_TimeLeft -= delta;
     }
 
     public GameObject obstacle { get { return m_ObstacleObject; } }
     public GenericObstacle data { get { return m_Data; } }
+    public float timeLeft { get { return m_TimeLeft; } set { m_TimeLeft = value; } }
 }
 
 public class ObstacleManager : MonoBehaviour
 {
     [SerializeField]
     private GenericObstacle[] m_Obstacles;
-    private Stack<ObstaclePair> m_ObjectPool;
+    private List<ObstaclePair> m_ObjectPool;
 
-    private Stack<ObstaclePair> m_ObjectsInUse;
-
-    private float m_ResetTime = 8f;
+    private List<ObstaclePair> m_ObjectsInUse;
 
     [SerializeField]
     private Transform m_ObjectPoolPosition;
@@ -37,19 +47,20 @@ public class ObstacleManager : MonoBehaviour
     {
         InitializeObjectPool();
         Player.onPlayerDeath += OnDeath;
+        GameManager.OnGameStart += OnReset;
     }
 
     public void InitializeObjectPool()
     {
-        m_ObjectsInUse = new Stack<ObstaclePair>();
-        m_ObjectPool = new Stack<ObstaclePair>();
+        m_ObjectsInUse = new List<ObstaclePair>();
+        m_ObjectPool = new List<ObstaclePair>();
         for(int i = 0; i < m_Obstacles.Length; i++)
         {
             for(int j = 0; j < m_Obstacles[i].objectPoolAmount; j++)
             {
                 GameObject obstacle = Instantiate(m_Obstacles[i].obstacleObject, m_ObjectPoolPosition);
                 ObstaclePair obstaclePair = new ObstaclePair(obstacle, m_Obstacles[i]);
-                m_ObjectPool.Push(obstaclePair);
+                m_ObjectPool.Add(obstaclePair);
             }
         }
     }
@@ -59,19 +70,19 @@ public class ObstacleManager : MonoBehaviour
     {
         if (!m_Death)
         {
-            m_ResetTime -= Time.deltaTime;
             if (m_ObjectsInUse.Count > 0)
             {
-                ObstaclePair[] updatePosition = m_ObjectsInUse.ToArray();
-                for (int i = 0; i < updatePosition.Length; i++)
+                for (int i = 0; i < m_ObjectsInUse.Count - 1; i++)
                 {
-                    GameObject obstacle = updatePosition[i].obstacle;
-                    updatePosition[i].obstacle.transform.position = obstacle.transform.position + -Vector3.forward * 10f * Time.deltaTime;
-                }
-                if (m_ResetTime < 0)
-                {
-                    m_ResetTime = 4f;
-                    ToObjectPool(m_ObjectsInUse.Pop());
+                    GameObject obstacle = m_ObjectsInUse[i].obstacle;
+                    m_ObjectsInUse[i].obstacle.transform.position = obstacle.transform.position + -Vector3.forward * 10f * Time.deltaTime;
+                    m_ObjectsInUse[i].RemoveTime(Time.deltaTime);
+
+                    if(m_ObjectsInUse[i].timeLeft <= 0)
+                    {
+                        ToObjectPool(m_ObjectsInUse[i]);
+                        m_ObjectsInUse.RemoveAt(i);
+                    }
                 }
             }
         }
@@ -85,23 +96,43 @@ public class ObstacleManager : MonoBehaviour
     void OnReset()
     {
         m_Death = false;
+
+        if (m_ObjectsInUse.Count > 0)
+        {
+            for (int i = 0; i < m_ObjectsInUse.Count; i++)
+            {
+                ToObjectPool(m_ObjectsInUse[i]);
+                m_ObjectsInUse.Remove(m_ObjectsInUse[i]);
+            }
+        }
     }
 
     void ToObjectPool(ObstaclePair pair)
     {
         pair.obstacle.gameObject.transform.position = m_ObjectPoolPosition.position;
         pair.obstacle.gameObject.SetActive(false);
-        m_ObjectPool.Push(pair);
+        m_ObjectPool.Add(pair);
     }
 
     public void SpawnObstacle(Vector3 position)
     {
         if (!m_Death)
         {
-            ObstaclePair fromPool = m_ObjectPool.Pop();
-            fromPool.obstacle.transform.position = new Vector3(position.x, position.y, 20);
-            fromPool.obstacle.gameObject.SetActive(true);
-            m_ObjectsInUse.Push(fromPool);
+            int random = Random.Range(0, m_ObjectPool.Count - 1);
+            ObstaclePair fromPool = m_ObjectPool[random];
+            if (m_ObjectPool.Count > 0)
+            {
+                m_ObjectPool.RemoveAt(random);
+
+                fromPool.obstacle.transform.position = new Vector3(position.x, position.y, 20);
+                fromPool.obstacle.gameObject.SetActive(true);
+                fromPool.SetLifetime(4);
+                m_ObjectsInUse.Add(fromPool);
+            }
+            else
+            {
+                Debug.LogError("Pool Empty...");
+            }
         }
     }
 

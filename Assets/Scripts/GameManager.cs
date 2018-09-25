@@ -6,7 +6,9 @@ using UnityEngine.Analytics;
 public class GameManager : MonoBehaviour {
 
     public delegate void GameManagerEvent();
-    public static GameManagerEvent OnGameReset;
+    public static GameManagerEvent OnGameStart;
+    public static GameManagerEvent OnLostFocus;
+    public static GameManagerEvent OnRegainFocus;
 
     private int m_GlobalPlays = 0;
     private static bool m_PlayerAlive;
@@ -18,24 +20,51 @@ public class GameManager : MonoBehaviour {
 
         AnalyticsEvent.debugMode = Application.isEditor;
 
-        if(m_GlobalPlays == 0)
+        DataPrivacy.Initialize();
+        
+        if (m_GlobalPlays == 0)
         {
-            DataPrivacy.Initialize();
+            //First Play
+        }
+
+        //When first playing;
+        if(OnGameStart != null)
+        {
+            OnGameStart();
         }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!m_PlayerAlive)
+            {
+                Application.Quit();
+            }
+            else
+            {
+                //Show Pause Screen
+            }
+        }
+
+        if (!Application.isFocused)
+        {
+            if(OnLostFocus != null)
+            {
+                OnLostFocus();
+            }
+        }
 	}
 
     public void PlayAgain()
     {
         m_GlobalPlays++;
+        
         m_PlayerAlive = true;
-        if (OnGameReset != null)
+        if (OnGameStart != null)
         {
-            OnGameReset();
+            OnGameStart();
         }
     }
 

@@ -9,6 +9,9 @@ namespace UnityEngine.Analytics
     {
         bool urlOpened = false;
 
+        [SerializeField]
+        public Text m_Debug;
+
         DataPrivacyButton()
         {
             onClick.AddListener(OpenDataPrivacyUrl);
@@ -18,6 +21,7 @@ namespace UnityEngine.Analytics
         {
             interactable = true;
             Debug.LogWarning(String.Format("Failed to get data privacy url: {0}", reason));
+            GameObject.Find("DEBUG").GetComponent<Text>().text = String.Format("Failed to get data privacy url: {0}", reason);
         }
 
         void OpenUrl(string url)

@@ -7,15 +7,6 @@ public class EndScreen : MonoBehaviour {
     [SerializeField]
     private GameManager m_Manager;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void PlayAgainButton()
     {

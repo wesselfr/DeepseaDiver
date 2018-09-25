@@ -36,6 +36,8 @@ public class Player : MonoBehaviour {
         m_Alive = true;
         m_Debug = Application.isEditor;
 
+        GameManager.OnGameStart += ResetPlayer;
+
         float ratio = Screen.width / Screen.height;
         m_SideSwapSensivity = m_SwipeSensivity * ratio;
 	}
@@ -180,9 +182,16 @@ public class Player : MonoBehaviour {
         CallculateLerpTime();
     }
 
+    void ResetPlayer()
+    {
+        m_Alive = true;
+        transform.position = m_Lanes.StartPosition();
+        m_GoalPosition = transform.position;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag.Contains("Obstacle"))
+        if (other.gameObject.tag.Contains("Obstacle") && m_Alive)
         {
             //Kill
             Debug.Log("KILL");
