@@ -2,25 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [CreateAssetMenu(fileName = "NewObstacle", menuName = "Obstacles/New")]
-public class GenericObstacle : MonoBehaviour { 
+public class GenericObstacle : ScriptableObject { 
 
+    [Header("Positions and size")]
     [SerializeField]
-    [GridSelector(3,3)]
-    public bool[,] m_Size = new bool[4,4];
-    [GridSelector(3,3)]
-    public bool[,] m_Position;
+    private bool[] m_Size = new bool[9];
+    [SerializeField]
+    private bool[] m_Positions = new bool[9];
 
-    [SerializeField][GridSelector(3,3)]
-    public bool m_Test;
+    [Header("Model and art settings")]
+    [SerializeField]
+    private GameObject m_Prefab;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    [Header("Appearence")]
+    [SerializeField]
+    private int m_ObjectPoolAmount;
+
+    [Header("Scripts")]
+    [SerializeField]
+    private DamageBehavior m_Damage;
+
+
+    public int objectPoolAmount { get { return m_ObjectPoolAmount; } }
+    public GameObject obstacleObject { get { return m_Prefab; } }
+    public DamageBehavior damageBehavior { get { return m_Damage; } }
+    
 }

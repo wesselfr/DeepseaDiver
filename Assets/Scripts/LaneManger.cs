@@ -16,6 +16,11 @@ public class Vector2i
         m_X = Mathf.RoundToInt(x);
         m_Y = Mathf.RoundToInt(y);
     }
+    public Vector2i(Vector2 vector)
+    {
+        m_X = Mathf.RoundToInt(vector.x);
+        m_Y = Mathf.RoundToInt(vector.y);
+    }
 
     public static implicit operator Vector2i(Vector2 vector)
     {
@@ -36,8 +41,19 @@ public class LaneManger : MonoBehaviour {
     [SerializeField]
     private Lane[] m_BottomLanes, m_CenterLanes, m_TopLanes;
 
+    [SerializeField]
+    private Vector2 m_StartLane;
+
+    [SerializeField]
+    private ObstacleManager m_Obstacles;
+
     private Lane[,] m_LaneGrid;
     private Vector2i m_CurrentLane;
+
+    [SerializeField]
+    private float m_TimeForNextObstacle;
+
+    private float m_SpawnTimer;
 
     public void Start()
     {
@@ -69,6 +85,21 @@ public class LaneManger : MonoBehaviour {
         m_CurrentLane.y = Mathf.Clamp(m_CurrentLane.y, 0, 2);
     }
 
+    private void Update()
+    {
+        m_SpawnTimer -= Time.deltaTime;
+        if(m_SpawnTimer < 0)
+        {
+            m_SpawnTimer = m_TimeForNextObstacle;
+
+            int x = Random.Range(0, 3);
+            int y = Random.Range(0, 3);
+            
+            m_Obstacles.SpawnObstacle(m_LaneGrid[x, y].transform.position);
+            
+        }
+    }
+
     public Vector3 MoveUp()
     {
         CheckAndSetDirection(Vector2.up);
@@ -93,6 +124,12 @@ public class LaneManger : MonoBehaviour {
         return m_LaneGrid[m_CurrentLane.x, m_CurrentLane.y].transform.position;
     }
 
+    public Vector3 StartPosition()
+    {
+        Vector2i start = new Vector2i(m_StartLane);
+        m_CurrentLane = m_StartLane;
+        return m_LaneGrid[start.x, start.y].transform.position;
+    }
 
     
 }
