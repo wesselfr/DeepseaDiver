@@ -35,7 +35,7 @@ public class ScoreManager : MonoBehaviour
     void SetScores(SaveData data)
     {
         m_HighScore = data.score;
-        Debug.Log(data.score);
+        Debug.Log("Best Score: " +  data.score);
         m_BestText.text = "Best: " + Mathf.RoundToInt(m_HighScore);
     }
 

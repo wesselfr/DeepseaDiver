@@ -66,6 +66,9 @@ public class UIManager : MonoBehaviour {
     {
         m_InGameUI.SetActive(true);
         m_EndRunUI.SetActive(false);
+        m_MainMenuUI.SetActive(false);
+        m_FirstPlayUI.SetActive(false);
+        m_SettingsUI.SetActive(false);
     }
 
 
