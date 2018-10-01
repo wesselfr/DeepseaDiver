@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Analytics;
 using TMPro;
+using System.Collections.Generic;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -10,6 +12,11 @@ public class ScoreManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI m_BestText;
+
+    public delegate void ScoreEvent(float score, float high);
+    public delegate void HighScoreEvent(float highScore);
+    public static HighScoreEvent OnNewHighScore;
+    public static ScoreEvent OnEndRun;
 
     private float m_Score;
     private float m_HighScore;
@@ -22,15 +29,38 @@ public class ScoreManager : MonoBehaviour
         m_Playing = true;
         Player.onPlayerDeath += OnDeath;
         GameManager.OnGameStart += StartPlaying;
+        GameManager.OnGameDataLoad += SetScores;
     }
 
-    public void OnDeath()
+    void SetScores(SaveData data)
+    {
+        m_HighScore = data.score;
+        Debug.Log(data.score);
+        m_BestText.text = "Best: " + Mathf.RoundToInt(m_HighScore);
+    }
+
+    void OnDeath()
     {
         m_Playing = false;
         if(m_Score > m_HighScore)
         {
             m_HighScore = m_Score;
+            if(OnNewHighScore != null)
+            {
+                OnNewHighScore(m_HighScore);
+            }
         }
+        if (OnEndRun != null)
+        {
+            OnEndRun(m_Score, m_HighScore);
+        }
+
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("score", m_Score);
+        data.Add("high_score", m_HighScore);
+
+        Analytics.CustomEvent("run_completed", data);
+
         ResetScore();
         m_BestText.text = "Best: " + Mathf.RoundToInt(m_HighScore);
     }
@@ -54,4 +84,7 @@ public class ScoreManager : MonoBehaviour
     {
         m_Playing = true;
     }
+
+    public float score { get { return m_Score; } }
+    public float highScore { get { return m_HighScore; } }
 }

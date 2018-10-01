@@ -50,6 +50,9 @@ public class LaneManger : MonoBehaviour {
     private Lane[,] m_LaneGrid;
     private Vector2i m_CurrentLane;
 
+    [SerializeField]
+    private float m_TimeForNextObstacle;
+
     private float m_SpawnTimer;
 
     public void Start()
@@ -87,7 +90,7 @@ public class LaneManger : MonoBehaviour {
         m_SpawnTimer -= Time.deltaTime;
         if(m_SpawnTimer < 0)
         {
-            m_SpawnTimer = 2f;
+            m_SpawnTimer = m_TimeForNextObstacle;
 
             int x = Random.Range(0, 3);
             int y = Random.Range(0, 3);

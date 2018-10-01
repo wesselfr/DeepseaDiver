@@ -99,10 +99,10 @@ public class ObstacleManager : MonoBehaviour
 
         if (m_ObjectsInUse.Count > 0)
         {
-            for (int i = 0; i < m_ObjectsInUse.Count; i++)
+            for (int i = m_ObjectsInUse.Count - 1; i > 0; i--)
             {
                 ToObjectPool(m_ObjectsInUse[i]);
-                m_ObjectsInUse.Remove(m_ObjectsInUse[i]);
+                m_ObjectsInUse.RemoveAt(i);
             }
         }
     }
