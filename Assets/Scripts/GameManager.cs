@@ -10,6 +10,8 @@ using System.Linq;
 public enum GameState
 {
     MainMenu,
+    Settings,
+    Tutorial,
     Playing,
     Dead
 }
@@ -29,9 +31,20 @@ public class GameManager : MonoBehaviour {
 
     public delegate void GameManagerEvent();
     public delegate void GameDataEvent(SaveData data);
+
+    public static GameManagerEvent OnGameLoaded;
     public static GameManagerEvent OnGameStart;
     public static GameManagerEvent OnLostFocus;
     public static GameManagerEvent OnRegainFocus;
+
+    //Tutorial
+    public static GameManagerEvent OnStartTutorial;
+    public static GameManagerEvent OnTutorialNext;
+    public static GameManagerEvent OnTutorialCompleted;
+    public static GameManagerEvent OnTutorialSkipped;
+
+    public static GameManagerEvent OnFirstPlay;
+    public static GameManagerEvent OnMainMenu;
 
     public static GameDataEvent OnGameDataLoad;
 
@@ -39,9 +52,11 @@ public class GameManager : MonoBehaviour {
 
     private GameState m_GameState;
 
+    private bool m_HasFocus;
+
 	// Use this for initialization
 	void Start () {
-        m_GameState = GameState.Playing;
+        m_GameState = GameState.MainMenu;
         Player.onPlayerDeath += PlayerDeath;
         Application.quitting += SaveData;
 
@@ -49,19 +64,21 @@ public class GameManager : MonoBehaviour {
 
         DataPrivacy.Initialize();
 
+        m_HasFocus = true;
+
         LoadData();
+        if(OnGameLoaded != null) { OnGameLoaded(); }
 
         if (m_GlobalPlays == 0)
         {
             //First Play
+            //Aks for tutorial maybe?
+            if(OnFirstPlay != null)
+            {
+                OnFirstPlay();
+            }
         }
 
-        //When first playing;
-        if(OnGameStart != null)
-        {
-            AnalyticsEvent.GameStart();
-            OnGameStart();
-        }
 	}
 	
 	// Update is called once per frame
@@ -75,14 +92,28 @@ public class GameManager : MonoBehaviour {
             else
             {
                 //Show Pause Screen
+                //If we ever gonna implement one
+                //Maybe just pause the game and continue on touch.
             }
         }
 
-        if (!Application.isFocused)
+        //Focus lost
+        if (!Application.isFocused && m_HasFocus)
         {
+            m_HasFocus = false;
             if(OnLostFocus != null)
             {
                 OnLostFocus();
+            }
+            SaveData();
+        }
+        //Focus regaind
+        if(Application.isFocused && !m_HasFocus)
+        {
+            m_HasFocus = true;
+            if(OnRegainFocus != null)
+            {
+                OnRegainFocus();
             }
         }
 	}
@@ -94,7 +125,35 @@ public class GameManager : MonoBehaviour {
         m_GameState = GameState.Playing;
         if (OnGameStart != null)
         {
+            AnalyticsEvent.GameStart();
             OnGameStart();
+        }
+    }
+
+    public void StartTutorial()
+    {
+        AnalyticsEvent.TutorialStart();
+        if(OnStartTutorial != null)
+        {
+            OnStartTutorial();
+        }
+    }
+
+    public void TutorialCompleted()
+    {
+        AnalyticsEvent.TutorialComplete();
+        if(OnTutorialCompleted != null)
+        {
+            OnTutorialCompleted();
+        }
+    }
+
+    public void TutorialCanceld()
+    {
+        AnalyticsEvent.TutorialSkip();
+        if(OnTutorialSkipped != null)
+        {
+            OnTutorialSkipped();
         }
     }
 
@@ -102,9 +161,10 @@ public class GameManager : MonoBehaviour {
     {
         m_GameState = GameState.Dead;
         AnalyticsEvent.GameOver();
+        SaveData();
     }
 
-    public void LoadData()
+    private void LoadData()
     {
         string location = Application.persistentDataPath;
         location = Path.Combine(location, "save.dat");
@@ -131,7 +191,7 @@ public class GameManager : MonoBehaviour {
                         {
                             OnGameDataLoad(data);
                             m_GlobalPlays = data.totalPlays;
-                            Debug.Log("Global Plays" + m_GlobalPlays);
+                            Debug.Log("Global Plays: " + m_GlobalPlays);
                         }
                     }
                     else
@@ -147,7 +207,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void SaveData()
+    private void SaveData()
     {
         string location = Application.persistentDataPath;
         location = Path.Combine(location, "save.dat");

@@ -4,16 +4,31 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour {
 
+    [Header("Gameplay")]
     [SerializeField]
-    private GameObject m_ScoreHolder;
+    private GameObject m_InGameUI;
 
     [SerializeField]
     private GameObject m_EndRunUI;
+
+    [Header("Menu's")]
+    [SerializeField]
+    private GameObject m_MainMenuUI;
+
+    [SerializeField]
+    private GameObject m_SettingsUI;
+
+    [Header("Tutorials")]
+    [SerializeField]
+    private GameObject m_FirstPlayUI;
+
 
 	// Use this for initialization
 	void Start () {
         Player.onPlayerDeath += PlayerDeath;
         GameManager.OnGameStart += SwitchToGameView;
+        GameManager.OnFirstPlay += ShowFirstPlayUI;
+        GameManager.OnStartTutorial += HideFirstPlayUI;
 	}
 	
 	// Update is called once per frame
@@ -21,16 +36,35 @@ public class UIManager : MonoBehaviour {
 		
 	}
 
+    void ShowFirstPlayUI()
+    {
+        m_InGameUI.SetActive(false);
+        m_EndRunUI.SetActive(false);
+        m_MainMenuUI.SetActive(true);
+        m_SettingsUI.SetActive(false);
+        m_FirstPlayUI.SetActive(true);
+        StartCoroutine(ScaleEffect(m_FirstPlayUI, 5f));
+    }
+
+    public void HideFirstPlayUI()
+    {
+        m_InGameUI.SetActive(false);
+        m_EndRunUI.SetActive(false);
+        m_MainMenuUI.SetActive(true);
+        m_SettingsUI.SetActive(false);
+        m_FirstPlayUI.SetActive(false);
+    }
+
     void PlayerDeath()
     {
-        m_ScoreHolder.SetActive(false);
+        m_InGameUI.SetActive(false);
         m_EndRunUI.SetActive(true);
         StartCoroutine(ScaleEffect(m_EndRunUI, 7f));
     }
 
     void SwitchToGameView()
     {
-        m_ScoreHolder.SetActive(true);
+        m_InGameUI.SetActive(true);
         m_EndRunUI.SetActive(false);
     }
 

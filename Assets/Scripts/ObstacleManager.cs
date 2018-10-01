@@ -40,7 +40,7 @@ public class ObstacleManager : MonoBehaviour
     [SerializeField]
     private Transform m_ObjectPoolPosition;
 
-    private bool m_Death;
+    private bool m_Death = true;
 
     // Use this for initialization
     void Start()
