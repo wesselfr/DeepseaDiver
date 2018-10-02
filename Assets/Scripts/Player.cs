@@ -200,6 +200,7 @@ public class Player : MonoBehaviour {
             {
                 onPlayerDeath();
             }
+            other.gameObject.GetComponent<Obstacle>().PlayerDeath();
         }
     }
 
