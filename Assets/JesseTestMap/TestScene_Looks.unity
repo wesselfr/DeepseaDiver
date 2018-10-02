@@ -279,6 +279,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 198256306619973950, guid: 22b26f9024e22944faba069d97a9fa6f,
+        type: 2}
+      propertyPath: UVModule.cycles
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22b26f9024e22944faba069d97a9fa6f, type: 2}
   m_IsPrefabAsset: 0
