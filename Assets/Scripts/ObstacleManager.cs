@@ -42,6 +42,17 @@ public class ObstacleManager : MonoBehaviour
 
     private bool m_Death = true;
 
+    [SerializeField]
+    private LaneManger m_Lanes;
+
+    [SerializeField]
+    private float m_TimeForNextObstacle, m_MinTime, m_MaxTime;
+
+    [SerializeField]
+    private ScoreManager m_Score;
+
+    private float m_SpawnTimer;
+
     // Use this for initialization
     void Start()
     {
@@ -85,6 +96,30 @@ public class ObstacleManager : MonoBehaviour
                     }
                 }
             }
+        m_SpawnTimer -= Time.deltaTime;
+            if (m_SpawnTimer < 0)
+            {
+                m_SpawnTimer = Mathf.Clamp(m_TimeForNextObstacle - ((m_Score.score / 30) / 10f), m_MinTime, m_MaxTime);
+
+                int obstalces = Random.Range(1, 4);
+
+                int lastX = -1;
+                int lastY = -1;
+
+                Stack<Vector2i> lastPositions = new Stack<Vector2i>();
+
+                for (int i = 0; i < obstalces; i++)
+                {
+                    int x = Random.Range(0, 3);
+                    int y = Random.Range(0, 3);
+                    Vector2i position = new Vector2(x, y);
+                    if (!lastPositions.Contains(position))
+                    {
+                        SpawnObstacle(m_Lanes.GetPosition(position));
+                    }
+                    lastPositions.Push(position);
+                }
+            }
         }
     }
 
@@ -96,7 +131,7 @@ public class ObstacleManager : MonoBehaviour
     void OnReset()
     {
         m_Death = false;
-
+        m_SpawnTimer = m_TimeForNextObstacle;
         if (m_ObjectsInUse.Count > 0)
         {
             for (int i = m_ObjectsInUse.Count - 1; i > 0; i--)
@@ -118,10 +153,10 @@ public class ObstacleManager : MonoBehaviour
     {
         if (!m_Death)
         {
-            int random = Random.Range(0, m_ObjectPool.Count - 1);
-            ObstaclePair fromPool = m_ObjectPool[random];
+            int random = Random.Range(0, m_ObjectPool.Count);
             if (m_ObjectPool.Count > 0)
             {
+                ObstaclePair fromPool = m_ObjectPool[random];
                 m_ObjectPool.RemoveAt(random);
 
                 fromPool.obstacle.transform.position = new Vector3(position.x, position.y, 20);

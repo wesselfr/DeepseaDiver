@@ -13,6 +13,9 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_BestText;
 
+    [SerializeField]
+    private float m_ScoreMultiplier;
+
     public delegate void ScoreEvent(float score, float high);
     public delegate void HighScoreEvent(float highScore);
     public static HighScoreEvent OnNewHighScore;
@@ -70,7 +73,7 @@ public class ScoreManager : MonoBehaviour
     {
         if (m_Playing)
         {
-            m_Score += Time.deltaTime;
+            m_Score += Time.deltaTime * m_ScoreMultiplier;
             m_ScoreText.text = Mathf.Round(m_Score) + "";
         }
     }

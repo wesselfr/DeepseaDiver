@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour {
     [SerializeField]
     private GameObject m_EndRunUI;
 
+    [SerializeField]
+    private GameObject m_PauseScreen;
+
     [Header("Menu's")]
     [SerializeField]
     private GameObject m_MainMenuUI;
@@ -29,12 +32,20 @@ public class UIManager : MonoBehaviour {
         GameManager.OnGameStart += SwitchToGameView;
         GameManager.OnFirstPlay += ShowFirstPlayUI;
         GameManager.OnStartTutorial += HideFirstPlayUI;
+        GameManager.OnLostFocus += LostFocus;
+        GameManager.OnRegainFocus += RegainFocus;
+
+        m_MainMenuUI.SetActive(true);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void LostFocus()
+    {
+        m_PauseScreen.SetActive(true);
+    }
+    void RegainFocus()
+    {
+        m_PauseScreen.SetActive(false);
+    }
 
     void ShowFirstPlayUI()
     {

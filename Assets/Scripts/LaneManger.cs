@@ -50,10 +50,6 @@ public class LaneManger : MonoBehaviour {
     private Lane[,] m_LaneGrid;
     private Vector2i m_CurrentLane;
 
-    [SerializeField]
-    private float m_TimeForNextObstacle;
-
-    private float m_SpawnTimer;
 
     public void Start()
     {
@@ -85,20 +81,7 @@ public class LaneManger : MonoBehaviour {
         m_CurrentLane.y = Mathf.Clamp(m_CurrentLane.y, 0, 2);
     }
 
-    private void Update()
-    {
-        m_SpawnTimer -= Time.deltaTime;
-        if(m_SpawnTimer < 0)
-        {
-            m_SpawnTimer = m_TimeForNextObstacle;
 
-            int x = Random.Range(0, 3);
-            int y = Random.Range(0, 3);
-            
-            m_Obstacles.SpawnObstacle(m_LaneGrid[x, y].transform.position);
-            
-        }
-    }
 
     public Vector3 MoveUp()
     {
@@ -129,6 +112,11 @@ public class LaneManger : MonoBehaviour {
         Vector2i start = new Vector2i(m_StartLane);
         m_CurrentLane = m_StartLane;
         return m_LaneGrid[start.x, start.y].transform.position;
+    }
+
+    public Vector3 GetPosition(Vector2i grid)
+    {
+        return m_LaneGrid[grid.x, grid.y].transform.position;
     }
 
     
