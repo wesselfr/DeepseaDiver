@@ -26,7 +26,7 @@ public class ScoreManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        m_Playing = true;
+        m_Playing = false;
         Player.onPlayerDeath += OnDeath;
         GameManager.OnGameStart += StartPlaying;
         GameManager.OnGameDataLoad += SetScores;
