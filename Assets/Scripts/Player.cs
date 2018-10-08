@@ -201,6 +201,9 @@ public class Player : MonoBehaviour {
                 onPlayerDeath();
             }
             other.gameObject.GetComponent<Obstacle>().PlayerDeath();
+#if !UNITY_EDITOR
+            Handheld.Vibrate();
+#endif
         }
     }
 

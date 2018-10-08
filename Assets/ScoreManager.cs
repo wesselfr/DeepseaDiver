@@ -62,7 +62,7 @@ public class ScoreManager : MonoBehaviour
         data.Add("score", m_Score);
         data.Add("high_score", m_HighScore);
 
-        Analytics.CustomEvent("run_completed", data);
+        Analytics.CustomEvent("run_completed", new Dictionary<string, object> { {"score", m_Score },{ "high_score", m_HighScore} });
 
         ResetScore();
         m_BestText.text = "Best: " + Mathf.RoundToInt(m_HighScore);
