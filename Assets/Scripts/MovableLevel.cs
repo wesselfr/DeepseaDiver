@@ -25,6 +25,7 @@ public class MovableLevel : MonoBehaviour {
     void StartScrol()
     {
         m_Scrolling = true;
+        m_Speed = 10f;
     }
     // Update is called once per frame
     void Update () {
@@ -42,4 +43,10 @@ public class MovableLevel : MonoBehaviour {
             }
         }
 	}
+
+    public void UpdateSpeed(float newSpeed)
+    {
+        m_Speed = newSpeed;
+    }
+    public float speed { get { return m_Speed; } }
 }

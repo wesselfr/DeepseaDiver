@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 196847a69f1d52d458139976972b3b22, type: 3}
   m_Name: SeaMineObstacle
   m_EditorClassIdentifier: 
-  m_Size: 000000000100000000
+  m_Width: 1
+  m_Height: 1
   m_Positions: 010101010101010101
   m_Prefab: {fileID: 1942898717355720, guid: 036e28fc6f595224f9117bdf658f84e8, type: 2}
   m_ObjectPoolAmount: 10
+  m_AdditionalSpeed: 0
   m_Damage: {fileID: 0}

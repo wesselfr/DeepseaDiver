@@ -31,8 +31,14 @@ public class ObstaclePair
 
 public class ObstacleManager : MonoBehaviour
 {
+
+    [Header("Obstacles")]
     [SerializeField]
     private GenericObstacle[] m_Obstacles;
+
+    [SerializeField]
+    private GenericObstacle[] m_SpecialObstacles;
+
     private List<ObstaclePair> m_ObjectPool;
 
     private List<ObstaclePair> m_ObjectsInUse;
@@ -50,6 +56,11 @@ public class ObstacleManager : MonoBehaviour
 
     [SerializeField]
     private ScoreManager m_Score;
+
+    [SerializeField]
+    private MovableLevel m_Level;
+    [SerializeField]
+    private float m_SpeedMultiplier;
 
     private float m_SpawnTimer;
 
@@ -86,7 +97,8 @@ public class ObstacleManager : MonoBehaviour
                 for (int i = 0; i < m_ObjectsInUse.Count - 1; i++)
                 {
                     GameObject obstacle = m_ObjectsInUse[i].obstacle;
-                    m_ObjectsInUse[i].obstacle.transform.position = obstacle.transform.position + -Vector3.forward * 10f * Time.deltaTime;
+                    GenericObstacle data = m_ObjectsInUse[i].data;
+                    m_ObjectsInUse[i].obstacle.transform.position = obstacle.transform.position + -Vector3.forward * (m_Level.speed + (data.additionalSpeed))  * Time.deltaTime;
                     m_ObjectsInUse[i].RemoveTime(Time.deltaTime);
 
                     if(m_ObjectsInUse[i].timeLeft <= 0)
@@ -100,7 +112,7 @@ public class ObstacleManager : MonoBehaviour
             if (m_SpawnTimer < 0)
             {
                 m_SpawnTimer = Mathf.Clamp(m_TimeForNextObstacle - ((m_Score.score / 30) / 10f), m_MinTime, m_MaxTime);
-
+                m_Level.UpdateSpeed(Mathf.Clamp(10f + ((m_Score.score / 30f) * m_SpeedMultiplier), 10f, 40f));
                 int obstalces = Random.Range(1, 4);
 
                 int lastX = -1;
@@ -115,7 +127,7 @@ public class ObstacleManager : MonoBehaviour
                     Vector2i position = new Vector2(x, y);
                     if (!lastPositions.Contains(position))
                     {
-                        SpawnObstacle(m_Lanes.GetPosition(position));
+                        SpawnObstacle(m_Lanes.GetPosition(position), position);
                     }
                     lastPositions.Push(position);
                 }
@@ -149,7 +161,7 @@ public class ObstacleManager : MonoBehaviour
         m_ObjectPool.Add(pair);
     }
 
-    public void SpawnObstacle(Vector3 position)
+    public void SpawnObstacle(Vector3 position, Vector2i lane)
     {
         if (!m_Death)
         {
@@ -157,12 +169,16 @@ public class ObstacleManager : MonoBehaviour
             if (m_ObjectPool.Count > 0)
             {
                 ObstaclePair fromPool = m_ObjectPool[random];
-                m_ObjectPool.RemoveAt(random);
 
-                fromPool.obstacle.transform.position = new Vector3(position.x, position.y, 20);
-                fromPool.obstacle.gameObject.SetActive(true);
-                fromPool.SetLifetime(4);
-                m_ObjectsInUse.Add(fromPool);
+                if (fromPool.data.CanSpawn(lane))
+                {
+                    m_ObjectPool.RemoveAt(random);
+
+                    fromPool.obstacle.transform.position = new Vector3(position.x, position.y, 20);
+                    fromPool.obstacle.gameObject.SetActive(true);
+                    fromPool.SetLifetime(4);
+                    m_ObjectsInUse.Add(fromPool);
+                }     
             }
             else
             {

@@ -18,8 +18,10 @@ public class ScoreManager : MonoBehaviour
 
     public delegate void ScoreEvent(float score, float high);
     public delegate void HighScoreEvent(float highScore);
+    public delegate void GameEvent();
     public static HighScoreEvent OnNewHighScore;
     public static ScoreEvent OnEndRun;
+    public static GameEvent OnDifficultyIncrease;
 
     private float m_Score;
     private float m_HighScore;

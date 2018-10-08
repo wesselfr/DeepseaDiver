@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 196847a69f1d52d458139976972b3b22, type: 3}
-  m_Name: AnchorObstalce
+  m_Name: LargeJellyFishObstacle
   m_EditorClassIdentifier: 
-  m_Width: 1
-  m_Height: 1
-  m_Positions: 010101010100010101
-  m_Prefab: {fileID: 1404624820632148, guid: a0f939a86f5234a4192e78924d893178, type: 2}
-  m_ObjectPoolAmount: 10
+  m_Width: 3
+  m_Height: 3
+  m_Positions: 000000010101000000
+  m_Prefab: {fileID: 1191222596924516, guid: 7ca899ec60e863f4ea4da7f7ca134c42, type: 2}
+  m_ObjectPoolAmount: 3
   m_AdditionalSpeed: 0
   m_Damage: {fileID: 0}
