@@ -49,7 +49,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Tentacle
-  m_Speed: 0.5
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101767342787958746}
@@ -62,7 +62,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f9841bbe32176d24bb388cd53e0c6c23, type: 3}
+  m_Motion: {fileID: 7400000, guid: e61270cc7e81083429b6c7a5e6a354eb, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
