@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cda6746b7ac2b1549ae6b0f186c14e92
+guid: 28cbbe0f25f249d42a84fcf6d2f584ad
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -19,8 +19,8 @@ ModelImporter:
     100026: R_Hand
     100028: R_Shoulder
     400000: Belly
-    400002: //RootNode
-    400004: Character
+    400002: Character
+    400004: //RootNode
     400006: Chest
     400008: COG
     400010: Head
@@ -37,7 +37,9 @@ ModelImporter:
     2100002: Default_Material
     4300000: Character
     4300002: Head
-    7400000: Character
+    7400000: Idle
+    7400002: Left
+    7400004: Right
     9500000: //RootNode
     13700000: Character
     13700002: Head
@@ -70,10 +72,66 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Character
+      name: Idle
       takeName: Take 001
       firstFrame: 1
       lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Left
+      takeName: Take 001
+      firstFrame: 65
+      lastFrame: 75
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Right
+      takeName: Take 001
+      firstFrame: 80
+      lastFrame: 90
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -120,7 +178,7 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 10
+    previousCalculatedGlobalScale: 1
     hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
