@@ -15,6 +15,6 @@ MonoBehaviour:
   m_Height: 1
   m_Positions: 010101010101010101
   m_Prefab: {fileID: 1687552683842742, guid: 75a11ef302bf50a4584a3bc7ef47aa66, type: 2}
-  m_ObjectPoolAmount: 15
+  m_ObjectPoolAmount: 5
   m_AdditionalSpeed: 15
   m_Damage: {fileID: 0}

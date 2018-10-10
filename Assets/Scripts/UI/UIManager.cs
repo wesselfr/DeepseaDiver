@@ -77,7 +77,7 @@ public class UIManager : MonoBehaviour {
     {
         m_InGameUI.SetActive(true);
         m_EndRunUI.SetActive(false);
-        m_MainMenuUI.SetActive(false);
+        StartCoroutine(ScaleDownAndDisable(m_MainMenuUI, 9f));
         m_FirstPlayUI.SetActive(false);
         m_SettingsUI.SetActive(false);
     }
@@ -93,5 +93,18 @@ public class UIManager : MonoBehaviour {
             panel.transform.localScale = Vector3.one * scale;
             yield return new WaitForSeconds(0.01f);
         }
+    }
+
+    IEnumerator ScaleDownAndDisable(GameObject panel, float speed)
+    {
+        panel.transform.localScale = Vector3.one;
+        float scale = 1f;
+        while (scale > 0)
+        {
+            scale -= (0.01f * speed);
+            panel.transform.localScale = Vector3.one * scale;
+            yield return new WaitForSeconds(0.01f);
+        }
+        panel.SetActive(false);
     }
 }

@@ -12,10 +12,14 @@ public class Obstacle : MonoBehaviour {
     [SerializeField]
     private bool m_DisableOnPlayerTouch;
 
+    [SerializeField]
+    private Renderer m_Renderer;
+
     public void DisableObject()
     {
         SpawnParticle();
         m_Root.SetActive(false);
+        ResetMaterial();
     }
 
     public void PlayerDeath()
@@ -33,6 +37,45 @@ public class Obstacle : MonoBehaviour {
         {
             Instantiate(m_ParticleEffectToSpawn, m_ParticleHolder.transform);
         }
+    }
+
+    public void ResetMaterial()
+    {
+        foreach (Material mat in m_Renderer.materials)
+        {
+            mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            Color newColor = mat.color;
+            newColor.a = 1f;
+            mat.SetColor("_Color", newColor);
+        }
+
+    }
+
+    public void Fade()
+    {
+        StartCoroutine(FadeModel(0.1f));
+    }
+
+    public IEnumerator FadeModel(float speed)
+    {
+        foreach (Material mat in m_Renderer.materials)
+        {
+            mat.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+        }
+
+        float alpha = 1f;
+        while (alpha > 0)
+        {
+            alpha -= speed * Time.deltaTime;
+            foreach(Material mat in m_Renderer.materials)
+            {
+                Color newColor = mat.color;
+                newColor.a = Mathf.Clamp(alpha, 0.0f, 1.0f);
+                mat.SetColor("_Color", newColor);
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
+        ResetMaterial();
     }
 
 }
