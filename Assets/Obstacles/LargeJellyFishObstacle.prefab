@@ -40,7 +40,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1260256072193740
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +259,7 @@ MonoBehaviour:
   m_ParticleHolder: {fileID: 1260256072193740}
   m_ParticleEffectToSpawn: {fileID: 0}
   m_DisableOnPlayerTouch: 0
+  m_Renderer: {fileID: 23400739824482630}
 --- !u!114 &114277126477190952
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -58,7 +58,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1541283654506632
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +143,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1404624820632148}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5853846, y: 1.1186533, z: 0.5435705}
+  m_LocalPosition: {x: -3.874, y: -0.52546823, z: 10.998472}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4390855367855702}
@@ -260,6 +260,7 @@ MonoBehaviour:
   m_ParticleHolder: {fileID: 0}
   m_ParticleEffectToSpawn: {fileID: 0}
   m_DisableOnPlayerTouch: 0
+  m_Renderer: {fileID: 0}
 --- !u!114 &114751751150282208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -296,3 +297,4 @@ MonoBehaviour:
   m_ParticleHolder: {fileID: 0}
   m_ParticleEffectToSpawn: {fileID: 0}
   m_DisableOnPlayerTouch: 0
+  m_Renderer: {fileID: 23433324059453542}
