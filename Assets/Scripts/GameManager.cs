@@ -290,7 +290,7 @@ public class GameManager : MonoBehaviour {
             location = Path.Combine(location, "settings.dat");
             using (StreamWriter writer = new StreamWriter(location))
             {
-                writer.WriteLine(JsonUtility.ToJson(m_Settings, true));
+                writer.WriteLine(JsonUtility.ToJson(m_Settings));
                 writer.Close();
                 Debug.Log("Settings save at: " + location);
             }
