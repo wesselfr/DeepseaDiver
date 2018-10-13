@@ -307,6 +307,13 @@ public class GameManager : MonoBehaviour {
 
             //Save generated data.
             SaveSettings();
+
+            //Update settings
+            if (OnSettingLoaded != null)
+            {
+                OnSettingLoaded();
+            }
+
         }
     }
 

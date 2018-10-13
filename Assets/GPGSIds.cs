@@ -24,6 +24,12 @@
 
 public static class GPGSIds
 {
+        public const string achievement_kill_10_angler_fishes = "CgkI3azJ5JcdEAIQCA"; // <GPGSID>
+        public const string leaderboard_most_fish_killed = "CgkI3azJ5JcdEAIQCQ"; // <GPGSID>
+        public const string achievement_welcome_to_abyss = "CgkI3azJ5JcdEAIQBQ"; // <GPGSID>
+        public const string achievement_reach_300_meters = "CgkI3azJ5JcdEAIQBw"; // <GPGSID>
+        public const string achievement_reach_100_meters = "CgkI3azJ5JcdEAIQBg"; // <GPGSID>
+        public const string achievement_destory_10_sea_mines = "CgkI3azJ5JcdEAIQCg"; // <GPGSID>
         public const string leaderboard_best_distances = "CgkI3azJ5JcdEAIQAQ"; // <GPGSID>
 
 }

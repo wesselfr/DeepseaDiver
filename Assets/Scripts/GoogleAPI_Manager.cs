@@ -20,8 +20,8 @@ public class GoogleAPI_Manager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //GameManager.OnSettingLoaded += InitializeGooglePlayAPI;
-        InitializeGooglePlayAPI();
+        GameManager.OnSettingLoaded += InitializeGooglePlayAPI;
+        //InitializeGooglePlayAPI();
 	}
 	
 	// Update is called once per frame
@@ -38,7 +38,7 @@ public class GoogleAPI_Manager : MonoBehaviour {
 
     void InitializeGooglePlayAPI()
     {
-        if (true)
+        if (m_Manager.settings.useGooglePlay)
         {
             m_PlayerUsesGooglePlay = true;
 
@@ -46,8 +46,8 @@ public class GoogleAPI_Manager : MonoBehaviour {
             PlayGamesPlatform.DebugLogEnabled = true;
             PlayGamesPlatform.InitializeInstance(config);
             PlayGamesPlatform.Activate();
-            //SignIn();
-            //Social.ShowLeaderboardUI();
+
+            PlayGamesPlatform.Instance.Authenticate(SignInCallback, true);
         }
     }
 
@@ -82,23 +82,23 @@ public class GoogleAPI_Manager : MonoBehaviour {
         error = data;
         if (success)
         {
-            Debug.Log("(Lollygagger) Signed in!");
-            // Change sign-in button text
-            //signInButtonText.text = "Sign out";
-
-            // Show the user's name
-            //authStatus.text = "Signed in as: " + Social.localUser.userName;
+            Debug.Log("[Abyss Login] Signed in!");
+            m_UserLoggedIn = true;
         }
         else
         {
-            Debug.Log("(Lollygagger) Sign-in failed...");
-
-            // Show failure message
-            //signInButtonText.text = "Sign in";
-            //authStatus.text = "Sign-in failed";
+            Debug.Log("[Abyss Login] Sign-in failed...");
+            m_UserLoggedIn = false;
         }
 
-        Texture2D playerIcon = PlayGamesPlatform.Instance.localUser.image;
-        m_PlayerIcon.texture = playerIcon;
+        if (Social.localUser.image != null)
+        {
+            Texture2D playerIcon = Social.localUser.image;
+            m_PlayerIcon.texture = playerIcon;
+        }
+        else
+        {
+            m_PlayerIcon.gameObject.SetActive(false);
+        }
     }
 }

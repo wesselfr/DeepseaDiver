@@ -10100,6 +10100,7 @@ GameObject:
   - component: {fileID: 2102407027}
   - component: {fileID: 2102407029}
   - component: {fileID: 2102407030}
+  - component: {fileID: 2102407031}
   m_Layer: 0
   m_Name: SYSTEMS
   m_TagString: Untagged
@@ -10226,6 +10227,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Manager: {fileID: 2102407028}
   m_PlayerIcon: {fileID: 1747870559}
+--- !u!114 &2102407031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2102407023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c39e8a3b3244444498b6ebb3fc98961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AchievementsInUse:
+  - {fileID: 11400000, guid: 0116adeeb9aac3349a428e440df9bf3f, type: 2}
+  - {fileID: 11400000, guid: a20c95069ce505247b14031590c7e5dd, type: 2}
 --- !u!1 &2115066729
 GameObject:
   m_ObjectHideFlags: 0
