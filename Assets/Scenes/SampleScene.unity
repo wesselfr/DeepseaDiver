@@ -228,6 +228,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1687552683842742, guid: 75a11ef302bf50a4584a3bc7ef47aa66, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75a11ef302bf50a4584a3bc7ef47aa66, type: 2}
   m_IsPrefabAsset: 0
@@ -812,6 +816,10 @@ Prefab:
     - target: {fileID: 4920611637643740, guid: 7ca899ec60e863f4ea4da7f7ca134c42, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1191222596924516, guid: 7ca899ec60e863f4ea4da7f7ca134c42, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ca899ec60e863f4ea4da7f7ca134c42, type: 2}
@@ -1658,6 +1666,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1942898717355720, guid: 036e28fc6f595224f9117bdf658f84e8, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 036e28fc6f595224f9117bdf658f84e8, type: 2}
   m_IsPrefabAsset: 0
@@ -2380,6 +2392,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4587419587133530, guid: a0f939a86f5234a4192e78924d893178, type: 2}
       propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404624820632148, guid: a0f939a86f5234a4192e78924d893178, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7824,6 +7840,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1856898768234430, guid: e4d31d350bb38784c8d01f2bd44050ff, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4d31d350bb38784c8d01f2bd44050ff, type: 2}
   m_IsPrefabAsset: 0
@@ -10238,6 +10258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c39e8a3b3244444498b6ebb3fc98961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Manager: {fileID: 0}
   m_AchievementsInUse:
   - {fileID: 11400000, guid: 0116adeeb9aac3349a428e440df9bf3f, type: 2}
   - {fileID: 11400000, guid: a20c95069ce505247b14031590c7e5dd, type: 2}

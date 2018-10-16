@@ -6,6 +6,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewObstacle", menuName = "Obstacles/New")]
 public class GenericObstacle : ScriptableObject {
 
+    [SerializeField]
+    private string m_ObstacleName;
+
     [Header("Positions and size")]
     [SerializeField]
     private int m_Width;
@@ -29,6 +32,7 @@ public class GenericObstacle : ScriptableObject {
     [SerializeField]
     private DamageBehavior m_Damage;
 
+    public string obstacleName { get { return m_ObstacleName; } }
 
     public int objectPoolAmount { get { return m_ObjectPoolAmount; } }
     public GameObject obstacleObject { get { return m_Prefab; } }

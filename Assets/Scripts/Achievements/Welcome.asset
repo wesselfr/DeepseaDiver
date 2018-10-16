@@ -16,6 +16,8 @@ MonoBehaviour:
   m_AchievementTitle: Welcome to Abyss
   m_AchievementDiscritpion: 
   m_AchievementIcon: {fileID: 21300000, guid: 869a802532bc98241b7dc9de84f02bb0, type: 3}
+  m_Conditions:
+  - {fileID: 11400000, guid: 5f2d2d5a279d45a47934f415046ba7f7, type: 2}
   m_PearlsReward: 10
   m_GooglePlayID: CgkI3azJ5JcdEAIQBQ
   m_UsesIncrement: 0

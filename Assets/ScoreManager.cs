@@ -21,6 +21,7 @@ public class ScoreManager : MonoBehaviour
     public delegate void GameEvent();
     public static HighScoreEvent OnNewHighScore;
     public static ScoreEvent OnEndRun;
+    public static GameEvent OnCheckAchievements;
     public static GameEvent OnDifficultyIncrease;
 
     private float m_Score;
@@ -58,6 +59,10 @@ public class ScoreManager : MonoBehaviour
         if (OnEndRun != null)
         {
             OnEndRun(m_Score, m_HighScore);
+        }
+        if(OnCheckAchievements != null)
+        {
+            OnCheckAchievements();
         }
 
         Dictionary<string, object> data = new Dictionary<string, object>();

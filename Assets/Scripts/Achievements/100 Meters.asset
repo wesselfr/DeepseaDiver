@@ -16,6 +16,8 @@ MonoBehaviour:
   m_AchievementTitle: Reach 100 Meters
   m_AchievementDiscritpion: 
   m_AchievementIcon: {fileID: 0}
+  m_Conditions:
+  - {fileID: 11400000, guid: 262a09c906096704a94d5cbed88eb986, type: 2}
   m_PearlsReward: 10
   m_GooglePlayID: CgkI3azJ5JcdEAIQBg
   m_UsesIncrement: 1

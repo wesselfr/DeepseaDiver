@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Reflection;
 using System;
 
+
 [CreateAssetMenu(fileName = "New Achievement", menuName = "Achievements/New")]
 public class GenericAchievement : ScriptableObject {
 
@@ -23,6 +24,10 @@ public class GenericAchievement : ScriptableObject {
     [SerializeField]
     private Sprite m_AchievementIcon;
 
+    [Header("Conditions")]
+    [SerializeField]
+    private GenericCondition[] m_Conditions;
+
     [Header("Rewards and Extra's")]
     [SerializeField]
     private int m_PearlsReward;
@@ -36,5 +41,7 @@ public class GenericAchievement : ScriptableObject {
 
     #region Accesors
     public string achievementName { get { return m_AchievementName; } }
+
+    public GenericCondition[] conditions { get { return m_Conditions; } }
     #endregion
 }
