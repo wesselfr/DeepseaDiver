@@ -5466,7 +5466,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1308428132}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fffdeeb8db09f345bb6cad6e214de2d, type: 3}
   m_Name: 
@@ -8228,7 +8228,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1821549451}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fffdeeb8db09f345bb6cad6e214de2d, type: 3}
   m_Name: 
@@ -10283,7 +10283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c39e8a3b3244444498b6ebb3fc98961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Manager: {fileID: 0}
+  m_Manager: {fileID: 2102407028}
   m_AchievementsInUse:
   - {fileID: 11400000, guid: 0116adeeb9aac3349a428e440df9bf3f, type: 2}
   - {fileID: 11400000, guid: a20c95069ce505247b14031590c7e5dd, type: 2}

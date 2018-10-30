@@ -9,6 +9,7 @@ public class AchievementsManager : MonoBehaviour {
     private GameManager m_Manager;
     [SerializeField]
     private GenericAchievement[] m_AchievementsInUse;
+
     private Dictionary<string, GenericAchievement> m_Achievements;
 
     public delegate void AchievementEvent(string achievementName);
@@ -20,11 +21,12 @@ public class AchievementsManager : MonoBehaviour {
 	    //Load all Achievements
         for(int i = 0; i < m_AchievementsInUse.Length; i++)
         {
-            m_Achievements.Add(m_AchievementsInUse[i].achievementName, m_AchievementsInUse[i]);
-            foreach(GenericCondition condition in m_AchievementsInUse[i].conditions)
+            GenericAchievement achievement = Instantiate(m_AchievementsInUse[i]);
+            foreach(GenericCondition condition in achievement.conditions)
             {
                 condition.Awake();
             }
+            m_Achievements.Add(m_AchievementsInUse[i].achievementName, achievement);
         }
 
         ScoreManager.OnCheckAchievements += ShowAchievementsOnEndRun;
