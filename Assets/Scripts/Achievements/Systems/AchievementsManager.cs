@@ -22,10 +22,12 @@ public class AchievementsManager : MonoBehaviour {
         for(int i = 0; i < m_AchievementsInUse.Length; i++)
         {
             GenericAchievement achievement = Instantiate(m_AchievementsInUse[i]);
-            foreach(GenericCondition condition in achievement.conditions)
+            for(int j = 0; j < achievement.conditions.Length; j++)
             {
-                condition.Awake();
+                achievement.conditions[j] = Instantiate(achievement.conditions[j]);
+                achievement.conditions[j].Awake();
             }
+            
             m_Achievements.Add(m_AchievementsInUse[i].achievementName, achievement);
         }
 
