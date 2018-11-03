@@ -55,6 +55,7 @@ public class AchievementsManager : MonoBehaviour {
             }
             if (completedAllConditions)
             {
+                Debug.Log("Completed Achievement: " + m_AchievementsInUse[i].name);
                 if (m_Manager.settings.useGooglePlay)
                 {
                     if (PlayGamesPlatform.Instance.localUser.authenticated)

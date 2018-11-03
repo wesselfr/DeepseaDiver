@@ -8,6 +8,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 835bf96d98cf7b7459f50b62c834be77, type: 3}
   m_Name: StartAppCondition
-  m_EditorClassIdentifier: Assembly-CSharp::StateCondition
+  m_EditorClassIdentifier: 

@@ -13,6 +13,9 @@ public class GoogleAPI_Manager : MonoBehaviour {
     [SerializeField]
     private RawImage m_PlayerIcon;
 
+    [SerializeField]
+    private bool m_Debug;
+
     private bool m_PlayerUsesGooglePlay = false;
     private bool m_UserLoggedIn = false;
 
@@ -26,11 +29,15 @@ public class GoogleAPI_Manager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void OnGUI () {
-        GUI.skin.label.fontSize = Screen.width / 40;
 
-        //GUILayout.Label("Username: " + PlayGamesPlatform.Instance.localUser.userName);
-        GUILayout.Label("Username: " + Social.localUser.userName);
-        GUILayout.Label("Status: " + error);
+        if (m_Debug)
+        {
+            GUI.skin.label.fontSize = Screen.width / 40;
+
+            //GUILayout.Label("Username: " + PlayGamesPlatform.Instance.localUser.userName);
+            GUILayout.Label("Username: " + Social.localUser.userName);
+            GUILayout.Label("Status: " + error);
+        }
 
        
 
