@@ -1,17 +1,17 @@
 fileFormatVersion: 2
-guid: a4938c49d9c57bb4fb79ec6c32e921f5
+guid: 25165a455d0310a4da8a41c521dcc170
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: lambert1
+    2100000: lambert2
     2100002: lambert3
-    2100004: lambert2
-    2100006: lambert4
+    2100004: lambert4
+    2100006: lambert1
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pSphere135
+    4300000: group37_pSphere132
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -43,7 +43,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 100
     meshCompression: 0
     addColliders: 0
     importVisibility: 1

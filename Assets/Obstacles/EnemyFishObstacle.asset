@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 196847a69f1d52d458139976972b3b22, type: 3}
   m_Name: EnemyFishObstacle
   m_EditorClassIdentifier: 
+  m_ObstacleName: Angler Fish
   m_Width: 1
   m_Height: 1
   m_Positions: 010101010101010101

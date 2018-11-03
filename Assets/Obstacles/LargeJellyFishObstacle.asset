@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 196847a69f1d52d458139976972b3b22, type: 3}
   m_Name: LargeJellyFishObstacle
   m_EditorClassIdentifier: 
+  m_ObstacleName: Large Jelly Fish
   m_Width: 3
   m_Height: 3
   m_Positions: 000000010101000000

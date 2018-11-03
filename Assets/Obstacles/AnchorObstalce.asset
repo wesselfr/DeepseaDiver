@@ -11,9 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 196847a69f1d52d458139976972b3b22, type: 3}
   m_Name: AnchorObstalce
   m_EditorClassIdentifier: 
+  m_ObstacleName: Anchor
   m_Width: 1
   m_Height: 1
-  m_Positions: 010101010100010101
+  m_Positions: 010101010101010101
   m_Prefab: {fileID: 1404624820632148, guid: a0f939a86f5234a4192e78924d893178, type: 2}
   m_ObjectPoolAmount: 10
   m_AdditionalSpeed: 0
