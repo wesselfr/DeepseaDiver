@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour {
+    public delegate void ObstacleEvent(GenericObstacle name);
+
+    public static ObstacleEvent OnObstalceDestroyed;
+
     [SerializeField]
     private GameObject m_Root, m_ParticleHolder;
 
@@ -15,11 +19,23 @@ public class Obstacle : MonoBehaviour {
     [SerializeField]
     private Renderer m_Renderer;
 
+    [SerializeField]
+    private GenericObstacle m_Obstacle;
+
     public void DisableObject()
     {
         SpawnParticle();
         m_Root.SetActive(false);
         ResetMaterial();
+    }
+
+    public void SpearHit()
+    {
+        DisableObject();
+        if(OnObstalceDestroyed != null)
+        {
+            OnObstalceDestroyed(m_Obstacle);
+        }
     }
 
     public void PlayerDeath()

@@ -58,7 +58,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1756649497587332
 GameObject:
   m_ObjectHideFlags: 1
@@ -69,7 +69,6 @@ GameObject:
   - component: {fileID: 4039009152068934}
   - component: {fileID: 65273670814985980}
   - component: {fileID: 114651051920619080}
-  - component: {fileID: 114102842459116416}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Obstacle
@@ -244,22 +243,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114102842459116416
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1756649497587332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4bfaebc760066f4a934e09683e818a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Root: {fileID: 0}
-  m_ParticleHolder: {fileID: 0}
-  m_ParticleEffectToSpawn: {fileID: 0}
-  m_DisableOnPlayerTouch: 0
-  m_Renderer: {fileID: 23314843531257918}
 --- !u!114 &114581650094129610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -296,4 +279,5 @@ MonoBehaviour:
   m_ParticleHolder: {fileID: 0}
   m_ParticleEffectToSpawn: {fileID: 0}
   m_DisableOnPlayerTouch: 0
-  m_Renderer: {fileID: 0}
+  m_Renderer: {fileID: 23314843531257918}
+  m_Obstacle: {fileID: 11400000, guid: 9f36600ae28dc054994d46b29c4cc02b, type: 2}

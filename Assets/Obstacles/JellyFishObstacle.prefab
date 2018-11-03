@@ -105,7 +105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4190357316776926
 Transform:
   m_ObjectHideFlags: 1
@@ -260,6 +260,7 @@ MonoBehaviour:
   m_ParticleEffectToSpawn: {fileID: 0}
   m_DisableOnPlayerTouch: 0
   m_Renderer: {fileID: 23899350311054072}
+  m_Obstacle: {fileID: 11400000, guid: 41eac43acefa0c14d9558ac8991311f9, type: 2}
 --- !u!114 &114979371686765134
 MonoBehaviour:
   m_ObjectHideFlags: 1

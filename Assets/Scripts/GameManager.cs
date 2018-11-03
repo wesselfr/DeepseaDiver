@@ -19,9 +19,22 @@ public enum GameState
 [System.Serializable]
 public class SaveData
 {
-    public int totalPlays;
+    public uint version; //In order to load correct data with updates.
+    public uint totalPlays;
     public int score;
+    public uint credits;
     public byte[] hash;
+}
+
+[System.Serializable]
+public class SettingsData
+{
+    public uint version; //In order to load correct data with updates.
+    public bool vibrateOnDeath;
+    public bool useGooglePlay; //Possibility to stop syncing with google play services.
+    public bool usePostProcessing; //This option is meant for low end devices.
+    public float musicVolume;
+    public float fxVolume;
 }
 
 public class GameManager : MonoBehaviour {
@@ -47,10 +60,13 @@ public class GameManager : MonoBehaviour {
     public static GameManagerEvent OnMainMenu;
 
     public static GameDataEvent OnGameDataLoad;
+    public static GameManagerEvent OnSettingLoaded;
 
-    private int m_GlobalPlays = 0;
+    private uint m_GlobalPlays = 0;
+    private uint m_Credits = 0;
 
     private GameState m_GameState;
+    private SettingsData m_Settings;
 
     private bool m_HasFocus;
 
@@ -67,6 +83,7 @@ public class GameManager : MonoBehaviour {
         m_HasFocus = true;
 
         LoadData();
+        LoadAndApplySettings();
         if(OnGameLoaded != null) { OnGameLoaded(); }
 
         if (m_GlobalPlays == 0)
@@ -180,8 +197,10 @@ public class GameManager : MonoBehaviour {
                 using (SHA256 sha = SHA256.Create())
                 {
                     List<byte> byteList = new List<byte>();
+                    byteList.Add(Convert.ToByte(data.version));
                     byteList.Add(Convert.ToByte(data.totalPlays));
                     byteList.Add(Convert.ToByte(data.score));
+                    byteList.Add(Convert.ToByte(data.credits));
 
                     byte[] hash = sha.ComputeHash(byteList.ToArray());
 
@@ -206,7 +225,6 @@ public class GameManager : MonoBehaviour {
             SaveData();
         }
     }
-
     private void SaveData()
     {
         string location = Application.persistentDataPath;
@@ -219,8 +237,10 @@ public class GameManager : MonoBehaviour {
         using (SHA256 sha = SHA256.Create())
         {
             List<byte> byteList = new List<byte>();
+            byteList.Add(Convert.ToByte(data.version));
             byteList.Add(Convert.ToByte(data.totalPlays));
             byteList.Add(Convert.ToByte(data.score));
+            byteList.Add(Convert.ToByte(data.credits));
 
             data.hash = sha.ComputeHash(byteList.ToArray());
         }
@@ -234,5 +254,69 @@ public class GameManager : MonoBehaviour {
         Debug.Log(location);
     }
 
+    private void LoadAndApplySettings()
+    {
+        string location = Application.persistentDataPath;
+        location = Path.Combine(location, "settings.dat");
+
+        if (File.Exists(location))
+        {
+            using (StreamReader reader = new StreamReader(location))
+            {
+                string json = reader.ReadLine();
+                SettingsData data = JsonUtility.FromJson<SettingsData>(json);
+                reader.Close();
+
+                m_Settings = data;
+                if(OnSettingLoaded != null)
+                {
+                    OnSettingLoaded();
+                }
+                Debug.Log("Settings loaded. Location: " + location);
+            }
+        }
+        else
+        {
+            SaveSettings();
+        }
+
+    }
+
+    private void SaveSettings()
+    {
+        if (m_Settings != null)
+        {
+            string location = Application.persistentDataPath;
+            location = Path.Combine(location, "settings.dat");
+            using (StreamWriter writer = new StreamWriter(location))
+            {
+                writer.WriteLine(JsonUtility.ToJson(m_Settings));
+                writer.Close();
+                Debug.Log("Settings save at: " + location);
+            }
+        }
+        else
+        {
+            //Generate standard settings.
+            m_Settings = new SettingsData();
+            m_Settings.useGooglePlay = true;
+            m_Settings.usePostProcessing = true;
+            m_Settings.vibrateOnDeath = true;
+            m_Settings.fxVolume = 100f;
+            m_Settings.musicVolume = 100f;
+
+            //Save generated data.
+            SaveSettings();
+
+            //Update settings
+            if (OnSettingLoaded != null)
+            {
+                OnSettingLoaded();
+            }
+
+        }
+    }
+
+    public SettingsData settings { get { return m_Settings; } }
     //public static bool playerAlive { get { return m_PlayerAlive; } }
 }

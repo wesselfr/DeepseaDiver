@@ -105,7 +105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4057169148956744
 Transform:
   m_ObjectHideFlags: 1
@@ -281,3 +281,4 @@ MonoBehaviour:
     type: 2}
   m_DisableOnPlayerTouch: 1
   m_Renderer: {fileID: 23488804508520892}
+  m_Obstacle: {fileID: 11400000, guid: 50b2813872db72b49b0823fcc3d6518d, type: 2}
